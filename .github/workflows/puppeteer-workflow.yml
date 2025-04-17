@@ -1,0 +1,76 @@
+
+name: Kannauj Automation
+
+on:
+  # schedule:
+     # - cron: "*/6 * * * *" # Run every 40 minutes
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  puppeteer-job:
+    runs-on: ubuntu-latest
+
+    # Ensure only one workflow runs at a time
+    concurrency:
+      group: puppeteer-job
+      cancel-in-progress: false # Wait if another workflow is running
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Configure Git
+      - name: Configure Git
+        run: |
+          git config --global user.name "akunal1"
+          git config --global user.email "mail.kunal71@gmail.com"
+
+      # Step 3: Ensure state directory exists
+      - name: Ensure State Directory
+        run: mkdir -p ./state
+
+      # Step 4: Initialize or Load last_index.json
+      - name: Load or Initialize last_index.json
+        run: |
+          if [ ! -f ./state/last_index.json ]; then
+            echo '{"lastIndex": 0}' > ./state/last_index.json
+          fi
+          cat ./state/last_index.json
+
+      # Step 5: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 6: Install or Update Dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 7: Run Puppeteer Script
+      - name: Run Puppeteer Script
+        env:
+          LAST_INDEX_PATH: ./state/last_index.json
+        run: node new.js
+
+      # Step 8: Update last_index.json
+      - name: Update last_index.json
+        run: |
+          # Read the current index
+          current_index=$(jq '.lastIndex' ./state/last_index.json)
+          echo "Current index: $current_index"
+
+          # Increment the index or reset to 0 if it exceeds 5998
+          next_index=$(( (current_index + 1) % 5999 ))
+          echo "Next index: $next_index"
+
+          # Update the JSON file
+          echo "{\"lastIndex\": $next_index}" > ./state/last_index.json
+
+      # Step 9: Commit and Push Updated Index
+      - name: Commit and Push Updated Index
+        run: |
+          git add ./state/last_index.json
+          git commit -m "Update lastIndex to $next_index"
+          git push
