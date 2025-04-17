@@ -99,7 +99,7 @@ const saveLastIndex = (index) => {
       //     .click(popupButtonId)
       //     .catch(() => console.log("Popup button not found"));
 
-      const popupButtonSelector = ".es-popup-button-product";
+      const popupButtonSelector = "#es-popup-button";
       await page.waitForSelector(popupButtonSelector, { timeout: 20000 });
       await page.click(popupButtonSelector);
       console.log("Popup button clicked.");
