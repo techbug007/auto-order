@@ -129,7 +129,7 @@ const saveLastIndex = (index) => {
 
       const data = formFields[i];
 
-      await page.waitForSelector('input[name="first_name"]', {
+      await page.waitForSelector('input[name="address"]', {
         visible: true,
         timeout: 30000,
       });
