@@ -2,8 +2,8 @@
 name: Kannauj Automation
 
 on:
-  # schedule:
-     # - cron: "*/6 * * * *" # Run every 40 minutes
+  schedule:
+     - cron: "*/120 * * * *" # Run every 40 minutes
   workflow_dispatch: # Allow manual triggering
 
 jobs:
