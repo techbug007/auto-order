@@ -118,7 +118,7 @@ const saveLastIndex = (index) => {
       console.log("Navigated to cart page");
 
       // // Click on the checkout button
-      const checkoutButtonId = ".es-button-title";
+      const checkoutButtonId = ".es-popup-button-cart";
 
       await page.waitForSelector(checkoutButtonId, { timeout: 10000 });
 
