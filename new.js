@@ -82,8 +82,7 @@ const saveLastIndex = (index) => {
         "https://ummahcollections.in/products/shahi-gulab3ml-attar-1pc-and-aseel-3ml-attar-1pc",
       ];
 
-      const randomUrl = "https://ummahcollections.in/";
-        // urls[Math.floor(Math.random() * urls.length)] ?? urls[0];
+      const randomUrl = urls[Math.floor(Math.random() * urls.length)] ?? urls[0];
 
       await page.goto(randomUrl, { waitUntil: "networkidle2", timeout: 60000 });
       console.log(`Navigated to ${randomUrl}`);
@@ -93,7 +92,7 @@ const saveLastIndex = (index) => {
       await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 10 seconds
 
       // Click on the popup button
-      //   const popupButtonId = "#es-popup-button";
+      //   const popupButtonId = ".es-button-title";
       //   await page.waitForSelector(popupButtonId, { timeout: 10000 });
       //   await page
       //     .click(popupButtonId)
