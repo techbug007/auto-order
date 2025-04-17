@@ -64,7 +64,7 @@ const saveLastIndex = (index) => {
     }
 
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
@@ -82,7 +82,8 @@ const saveLastIndex = (index) => {
         "https://ummahcollections.in/products/shahi-gulab3ml-attar-1pc-and-aseel-3ml-attar-1pc",
       ];
 
-      const randomUrl = urls[Math.floor(Math.random() * urls.length)] ?? urls[0];
+      const randomUrl =
+        urls[Math.floor(Math.random() * urls.length)] ?? urls[0];
 
       await page.goto(randomUrl, { waitUntil: "networkidle2", timeout: 60000 });
       console.log(`Navigated to ${randomUrl}`);
@@ -92,7 +93,7 @@ const saveLastIndex = (index) => {
       await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 10 seconds
 
       // Click on the popup button
-      //   const popupButtonId = ".es-button-title";
+      //   const popupButtonId = "#es-popup-button";
       //   await page.waitForSelector(popupButtonId, { timeout: 10000 });
       //   await page
       //     .click(popupButtonId)
@@ -105,26 +106,26 @@ const saveLastIndex = (index) => {
 
       await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 5 seconds
 
-      // // Refresh the page
-      // await page.reload({ waitUntil: "networkidle2" });
-      // console.log("Page refreshed.");
+      // Refresh the page
+      await page.reload({ waitUntil: "networkidle2" });
+      console.log("Page refreshed.");
 
-      // await page.goto("https://kannaujfragrances.in/cart", {
-      //   waitUntil: "networkidle2",
-      //   timeout: 60000,
-      // });
+      await page.goto("https://ummahcollections.in/cart", {
+        waitUntil: "networkidle2",
+        timeout: 60000,
+      });
 
-      // console.log("Navigated to cart page");
+      console.log("Navigated to cart page");
 
       // // Click on the checkout button
-      // const checkoutButtonId = ".es-popup-button-cart"; //".cart__checkout-button";
+      const checkoutButtonId = ".es-popup-button-cart"; //".cart__checkout-button";
 
-      // await page.waitForSelector(checkoutButtonId, { timeout: 10000 });
+      await page.waitForSelector(checkoutButtonId, { timeout: 10000 });
 
-      // await page.click(checkoutButtonId);
-      // console.log("checkoutButtonId button clicked.");
-      // await new Promise((resolve) => setTimeout(resolve, 15000)); // Wait 15 seconds
-      // console.log("waited 5 seconds");
+      await page.click(checkoutButtonId);
+      console.log("checkoutButtonId button clicked.");
+      await new Promise((resolve) => setTimeout(resolve, 15000)); // Wait 15 seconds
+      console.log("waited 5 seconds");
 
       const data = formFields[i];
 
