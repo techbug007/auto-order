@@ -195,10 +195,10 @@ const saveLastIndex = (index) => {
       await new Promise((resolve) => setTimeout(resolve, 20000)); // Wait 30 seconds
 
       const currentUrl = page.url(); // Get the current URL
-      if (currentUrl.includes("https://shopify.com/")) {
+      if (currentUrl.includes("/thank-you")) {
         console.log("<<<<<<<<<<<<<< success >>>>>>>>>>>>>>");
       } else {
-        console.log("URL does not contain 'https://shopify.com/'. Breaking...");
+        console.log("URL does not contain '/thank-you'. Breaking...");
         break;
       }
     } catch (error) {
